@@ -1,3 +1,9 @@
+html ,* {
+    scroll-behavior: smooth;
+  }
+.brand{
+    color: white;
+}
 .banner{
     display: flex;
     flex-direction: row;
@@ -6,10 +12,9 @@
     justify-content: center;
     margin: 20px 10px;
     padding: 0 50px;
+  
 }
-
 .about-sec{
-
     display: flex;
     flex-direction: row;
     align-items: flex-start;
