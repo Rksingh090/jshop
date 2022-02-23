@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "start": "python manage.py runserver",
+        "mm": "python manage.py makemigrations",
+        "mg": "python manage.py migrate"
+
+    }
+}

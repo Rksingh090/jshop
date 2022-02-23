@@ -8,40 +8,6 @@
 
 
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #000000f1; color: white;">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white" href="#">Jewellery Shop</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#about">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#register" >Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#login" >Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#contact" >Contact us</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-   
-
-  
-
   <!-- register form -->
 <!-- Modal -->
 <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,41 +20,42 @@
       <div class="modal-body">
         <form class="mx-1 mx-md-4" action="/" method="post">
             {% csrf_token %}
-          <div class="d-flex flex-row align-items-center mb-4">
+            
+           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="text" name="name" id="form3Example1c" class="form-control" placeholder="Your Name" />
-              <!-- <label class="form-label" for="form3Example1c">Your Name</label> -->
+              {{ register_form.first_name }}
+              <!-- <input type="text" name="" id="form3Example1c" class="form-control" placeholder="Your Name" /> -->
             </div>
-          </div>
-
+          </div> 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
-              <!-- <label class="form-label" for="form3Example3c">Your Email</label> -->
+              {{ register_form.username }}
+              <!-- <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/> -->
             </div>
           </div>
 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" id="form3Example4c" class="form-control" placeholder="Password" />
-              <!-- <label class="form-label" for="form3Example4c">Password</label> -->
+              {{ register_form.password1 }}
+              <!-- <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" /> -->
             </div>
           </div>
 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" id="form3Example4cd" class="form-control" placeholder=" Conform Password"/>
-              <!-- <label class="form-label" for="form3Example4cd">Repeat your password</label> -->
+              {{ register_form.password2 }}
+              <!-- <input type="password" id="form3Example4cd" class="form-control" placeholder=" Conform Password"/> -->
             </div>
           </div>
+       
 
           <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary btn-lg msx-2">Register</button>
+            <button type="submit" name="register_btn" class="btn btn-primary btn-lg msx-2">Register</button>
           </div>
         </form>
       </div>
@@ -105,11 +72,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="mx-1 mx-md-4">
+        <form class="mx-1 mx-md-4" action="/" method="post">
+          {% csrf_token %}
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
+              <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
               <!-- <label class="form-label" for="form3Example3c">Your Email</label> -->
             </div>
           </div>
@@ -117,14 +85,14 @@
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" id="form3Example4c" class="form-control" placeholder="Password" />
+              <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" />
               <!-- <label class="form-label" for="form3Example4c">Password</label> -->
             </div>
           </div>
           </div>
           <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary btn-lg msx-2">Login</button>
+            <button type="submit" name="login_btn" class="btn btn-primary btn-lg msx-2">Login</button>
           </div>
         </form>
       </div>
@@ -226,145 +194,5 @@
    </div>
 </div>
 
-  <!-- footer Section -->
-  <div>
-    <!-- Footer -->
-    <footer
-            class="text-center text-lg-start text-white"
-            style="background-color: #929fba"
-            >
-      <!-- Grid container -->
-      <div class="container p-4 pb-0">
-        <!-- Section: Links -->
-        <section class="">
-          <!--Grid row-->
-          <div class="row">
-            <!-- Grid column -->
-            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">
-               Jewellery Shop.
-              </h6>
-              <p>
-                Here you can use rows and columns to organize your footer
-                content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit.
-              </p>
-            </div>
-            <!-- Grid column -->
-  
-            <hr class="w-100 clearfix d-md-none" />
-  
-            <!-- Grid column -->
-            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
-              <p>
-                <a class="text-white">Bridal Jewellery.</a>
-              </p>
-              <p>
-                <a class="text-white">Copper Jewellery.</a>
-              </p>
-              <p>
-                <a class="text-white">Silver Jewellery.</a>
-              </p>
-              <p>
-                <a class="text-white">Kundan Jewellery.</a>
-              </p>
-            </div>
-            <!-- Grid column -->
-  
-            <hr class="w-100 clearfix d-md-none" />
-  
-            <!-- Grid column -->
-            <hr class="w-100 clearfix d-md-none" />
-  
-            <!-- Grid column -->
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-              <p><i class="fas fa-home mr-3"></i> Bhiwandi Maharashtra,India</p>
-              <p><i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
-              <p><i class="fas fa-phone mr-3"></i> +91 8888888888</p>
-              <p><i class="fas fa-print mr-3"></i> +91 234 567 89</p>
-            </div>
-            <!-- Grid column -->
-  
-            <!-- Grid column -->
-            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
-  
-              <!-- Facebook -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #3b5998"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-facebook-f"></i
-                ></a>
-  
-              <!-- Twitter -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #55acee"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-twitter"></i
-                ></a>
-  
-              <!-- Google -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #dd4b39"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-google"></i
-                ></a>
-  
-              <!-- Instagram -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #ac2bac"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-instagram"></i
-                ></a>
-  
-              <!-- Linkedin -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #0082ca"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-linkedin-in"></i
-                ></a>
-              <!-- Github -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #333333"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-github"></i
-                ></a>
-            </div>
-          </div>
-          <!--Grid row-->
-        </section>
-        <!-- Section: Links -->
-      </div>
-      <!-- Grid container -->
-  
-      <!-- Copyright -->
-      <div
-           class="text-center p-3"
-           style="background-color: rgba(0, 0, 0, 0.2)"
-           >
-        © 2020 Copyright:
-        <a class="text-white" href="https://mdbootstrap.com/"
-           >JewelleryShop</a
-          >
-      </div>
-      <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-  </div>
-  <!-- End of .container -->
 
 {% endblock body %}

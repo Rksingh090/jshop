@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    color: #444444;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.section-products {
+    padding: 35px 0 10px;
+}
+
+.section-products .header {
+    margin-bottom: 20px;
+}
+
+.section-products .header h3 {
+    font-size: 1rem;
+    color: #fe302f;
+    font-weight: 500;
+}
+
+.section-products .header h2 {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #444444; 
+}
+
+.section-products .single-product {
+    margin-bottom: 26px;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px #dadada, -1px -1px 2px #f0f0f0 ;
+    padding: 10px;
+}
+
+.section-products .single-product .part-1 {
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.section-products .single-product:hover img {
+		transform: scale(1.2,1.2) rotate(5deg);
+        background-size: cover;
+}
+
+.section-products #product-1 .part-1 img {
+    background-size: cover;
+    width: 100%;
+	transition: all 0.3s;
+}
+
+/* 
+.section-products .single-product .part-1 .discount,
+.section-products .single-product .part-1 .new {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #ffffff;
+    background-color: #fe302f;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.section-products .single-product .part-1 .new {
+    left: 0;
+    background-color: #444444;
+}
+
+.section-products .single-product .part-1 ul {
+    position: absolute;
+    bottom: -41px;
+    left: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    transition: bottom 0.5s, opacity 0.5s;
+}
+
+.section-products .single-product:hover .part-1 ul {
+    bottom: 30px;
+    opacity: 1;
+}
+
+.section-products .single-product .part-1 ul li {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.section-products .single-product .part-1 ul li a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #ffffff;
+    color: #444444;
+    text-align: center;
+    box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+    transition: color 0.2s;
+}
+
+.section-products .single-product .part-1 ul li a:hover {
+    color: #fe302f;
+} */
+
+.section-products .single-product .part-2{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* justify-content: space-between; */
+    padding: 0 2px;
+}
+.section-products .single-product .part-2> div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.section-products .single-product .part-2> div > *{
+    max-width: 70%;
+}
+.section-products .single-product .part-2 .product-title {
+    font-size: 1rem;
+}
+
+.section-products .single-product .part-2 h4 {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.section-products .single-product .part-2 .product-old-price {
+    position: relative;
+    padding: 0 7px;
+    margin-right: 2px;
+    opacity: 0.6;
+}
+
+.section-products .single-product .part-2 .product-old-price::after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #444444;
+    transform: translateY(-50%);
+}
+.buyNow:hover{
+    transform: translateX(5px);
+}
+.addtocart:hover{
+    transform: translateX(-5px);
+}
+.addtocart{
+    padding: 0 5px;
+}
+.buyNow, .addtocart{
+    transition: all .2s ease-in-out;
+    background-color: transparent;
+    border: .6px solid #222;
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+
+
+<section class="section-products">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="header">
+                    <h2>Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Single Product -->
+            {% for product in products %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div id="product-1" class="single-product">
+                    <div class="part-1">
+                        <img src="{{ product.productImage.url }}" alt="">
+        
+                    </div>
+                    <div class="part-2">
+                        <div>
+                            <h3 class="product-title">{{ product.productName }}</h3>
+                            <!-- <h4 class="product-old-price">$79.99</h4> -->
+                            <h4 class="product-price">&#x20B9;  {{ product.productPrize }}</h4>
+                        </div>
+                        <div>
+                            <button class="buyNow">Buy Now</button>
+                            <a class="addtocart" href="addtocart/{{product.id}}">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+  </section>
+{% endblock %}
