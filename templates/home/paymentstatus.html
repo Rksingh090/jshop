@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Status Regarding Your Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.0/css/all.css" />
+</head>
+<body>
+    
+    <div style="display: flex; width: 100%; height: 100vh; justify-content: center; align-items: center;">
+        <div style="width: 450px; padding: 30px 80px; background-color: #fff; box-shadow: 3px 3px 7px  #d9d9d9,-1px -1px 3px  #d9d9d9;" >
+            {% if response.RESPCODE == '01' %}
+                <h2 style="text-align: center;">Payment Success</h2>
+                <p >{{response.RESPMSG}}</p>
+            {% else %}
+            <div><i class="fa-solid fa-hexagon-xmark" style="width: 25px; height: 25px;"></i></div>
+                <h2 style="text-align: center;">Payment Failed</h2>
+                <p>{{response.RESPMSG}}</p>
+            {% endif%}
+
+            <p style="font-size: 17px;">Order Id: {{response.ORDERID}}</p>
+            <p style="font-size: 17px;">Transaction Id: {{response.TXNID}}</p>
+            <p style="font-size: 17px;">Transaction Amount: {{response.TXNAMOUNT}}</p>
+            {% if response.TXNDATE %}
+                <p style="font-size: 17px;">Transaction Date: {{response.TXNDATE}}</p>
+            {% endif %}
+            {% if response.PAYMENTMODE == 'DC' %}
+                <p style="font-size: 17px;">Transaction Date: {{response.BANKNAME}}</p>
+            {% endif %}
+            <p style="text-align: center; margin: 30px 0 0 0; padding: 10px 0 0 0;"><a href="/" style="padding: 8px 15px; background-color: rgb(2, 105, 201); color: white; text-decoration: none;">Go to Home Page</a></p>
+        </div>
+    </div>
+</body>
+</html> 

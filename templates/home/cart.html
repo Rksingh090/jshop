@@ -63,13 +63,26 @@
     color: white;
     border-radius: 5px;
 }
+.checkOutBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
 </style>
 
 {% endblock %}
 
 
 {% block body %}
-<h3 style="margin: 20px 0; text-align: center;">Cart Items | Total Amount: &#x20B9; {% if totalAmount %}{{totalAmount}}{% endif %}</h3>
+{% if cartlength > 0 %}
+<div class="checkOutBtn">
+    <h3 style="margin: 20px 0; text-align: center;">Cart Items | Total Amount: &#x20B9; {% if totalAmount %}{{totalAmount}}{% endif %}</h3>
+    <a href="/checkout">Check Out</a>
+</div>
+{% else %}
+<h3 style="margin: 100px 0; text-align: center;">No Items in the Cart</h3>
+{% endif %} 
 <div class="containerCart">
     {% for item in cart %}
     <div class="itemC">

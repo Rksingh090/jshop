@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *, html{
+            margin: 0;
+            padding: 0;
+        }
+        .messages{
+          margin: 0;
+          list-style: none;
+          width: 100%;
+          padding-left: 0;
+        }
+        .messages > li{
+          width: 100%;
+          padding: 6px 10px;
+          font-size: 20px;
+        }
+        .messages > .error{
+          background-color: red;
+          color: rgb(255, 255, 255);
+        }
+        .messages > .warning{
+          background-color: rgb(255, 237, 136);
+          color: rgb(0, 0, 0);
+        }
+        .formContainer{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom right, #e43762, #bd6e49);
+            position: relative;
+        }
+        .loginForm{
+            position: absolute;
+            background-color: white;
+            /* box-shadow: 3px 3px 5px #d9d9d9, 1px 1px 3px #dfdfdf; */
+            height: 70%;
+            width: 30%;
+        }
+        .loginForm > form{
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .loginForm > form > input:focus{
+            outline: none;
+        }
+        .loginForm > form > input{
+            width: 75%;
+            box-sizing: border-box;
+            padding: 8px 15px;
+            font-size: 18px;
+            border: none;
+            border-bottom: 1px solid #333;
+            margin: 20px 0;
+        }
+        .loginForm > form > button{
+            width: 75%;
+            padding: 10px 0;
+            border: none;
+            transition: all 1s ease;
+            background-color: rgb(231, 231, 231);
+            margin: 25px 0;
+            /* box-shadow: 3px 3px 5px #d9d9d9, 1px 1px 3px #dfdfdf; */
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+        .loginForm > form > button:hover{
+            transform: translateY(-5px);
+            color: white;
+            background-color: #b43d59;
+            box-shadow: 3px 3px 5px #d9d9d9, 1px 1px 3px #dfdfdf;
+        }
+      </style>
+</head>
+<body>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+
+            {% if register_form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+
+                {% for hidden in register_form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+            
+        </ul>
+    {% endif %}
+
+    <div class="formContainer">
+        <div class="loginForm">
+            <form action="/login" method="post" >
+                {% csrf_token %}
+                <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
+                <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" />
+                <button type="submit" name="login_btn" class="btn btn-primary btn-lg msx-2">Login</button>
+                <span onclick="hideLogin()"></span>
+            </form>
+        </div>
+        <div class="loginForm" style="display: none;">
+            <form action="/login" method="post" >
+                {% csrf_token %}
+                {{ register_form.first_name }}
+                {{ register_form.username }}
+                {{ register_form.password1 }}
+                {{ register_form.password2 }}
+                <button type="submit" name="register_btn" class="btn btn-primary btn-lg msx-2">Register</button>
+            </form>
+        </div>
+        
+    </div>
+
+    <!--
+    <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Registration Form </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="mx-1 mx-md-4" action="/" method="post">
+                  {% csrf_token %}
+                  
+                 <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    {{ register_form.first_name }}
+                    <input type="text" name="" id="form3Example1c" class="form-control" placeholder="Your Name" />
+                  </div>
+                </div> 
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    {{ register_form.username }}
+                    <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
+                  </div>
+                </div>
+      
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    {{ register_form.password1 }}
+                   <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" />
+                  </div>
+                </div>
+      
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    {{ register_form.password2 }}
+                    <input type="password" id="form3Example4cd" class="form-control" placeholder=" Conform Password"/>
+                  </div>
+                </div>
+             
+      
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" name="register_btn" class="btn btn-primary btn-lg msx-2">Register</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login Form</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="mx-1 mx-md-4" action="/" method="post">
+                {% csrf_token %}
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
+                    <label class="form-label" for="form3Example3c">Your Email</label>
+                  </div>
+                </div>
+      
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" />
+                    <label class="form-label" for="form3Example4c">Password</label>
+                  </div>
+                </div>
+                </div>
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" name="login_btn" class="btn btn-primary btn-lg msx-2">Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+</body>
+</html>

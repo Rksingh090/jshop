@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+    <title>Paytm Payment page</title>
+    
+</head>
+<body>
+    <h1>Redirecting to payment gateway...</h1>
+    <h2>Please do not refresh this page...</h2>
+    
+    <form action="https://securegw-stage.paytm.in/theia/processTransaction" method="post" name="paytm">
+        {% csrf_token %}
+        {% for key, value in param_dict.items %}
+         <input type="hidden" name="{{key}}" value="{{value}}" >
+        {% endfor %}
+    </form>
+
+    <script>
+        document.paytm.submit()
+    </script>
+</body>
+</html>

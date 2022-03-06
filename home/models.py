@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     productName = models.CharField(max_length=255)
+    productDesc = models.TextField(max_length=1000,null=True)
     productPrize = models.CharField(max_length=255)
     productImage = models.ImageField(upload_to='images/')
     def Meta():
@@ -22,8 +23,22 @@ class Cart(models.Model):
     userId = models.IntegerField(editable=False)
     userName = models.CharField(max_length=255)
     userEmail = models.EmailField(max_length=255, null=True)
-    qty = models.IntegerField()
+    qty = models.IntegerField(default=1, null=True)
+    orderId = models.IntegerField(null=True)
     def Meta():
         db_table = "products"
 
 
+class Orders(models.Model):
+    orderId = models.AutoField(primary_key=True)
+    order_json = models.TextField(max_length=5000)
+    userId = models.IntegerField(editable=False)
+    userName = models.CharField(max_length=255)
+    userEmail = models.EmailField(max_length=255, null=True)
+    userAddress = models.CharField(max_length=555, null=True)
+    city = models.CharField(max_length=255, null=True)
+    state = models.CharField(max_length=255, null=True)
+    zip_code = models.IntegerField(null=True)
+    phone = models.BigIntegerField(null=True)
+    totalAmount = models.IntegerField(null=True)
+    paymentStatus = models.CharField(max_length=255,default='PENDING',null=True)

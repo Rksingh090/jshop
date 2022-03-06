@@ -9,96 +9,6 @@
 
 {% block body %}
   <!-- register form -->
-<!-- Modal -->
-<div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Registration Form </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="mx-1 mx-md-4" action="/" method="post">
-            {% csrf_token %}
-            
-           <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-              {{ register_form.first_name }}
-              <!-- <input type="text" name="" id="form3Example1c" class="form-control" placeholder="Your Name" /> -->
-            </div>
-          </div> 
-          <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-              {{ register_form.username }}
-              <!-- <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/> -->
-            </div>
-          </div>
-
-          <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-              {{ register_form.password1 }}
-              <!-- <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" /> -->
-            </div>
-          </div>
-
-          <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-              {{ register_form.password2 }}
-              <!-- <input type="password" id="form3Example4cd" class="form-control" placeholder=" Conform Password"/> -->
-            </div>
-          </div>
-       
-
-          <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-            <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="register_btn" class="btn btn-primary btn-lg msx-2">Register</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- login section -->
-<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Login Form</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="mx-1 mx-md-4" action="/" method="post">
-          {% csrf_token %}
-          <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-              <input name="email" type="email" id="form3Example3c" class="form-control"  placeholder="Your Email"/>
-              <!-- <label class="form-label" for="form3Example3c">Your Email</label> -->
-            </div>
-          </div>
-
-          <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-              <input name="password" type="password" id="form3Example4c" class="form-control" placeholder="Password" />
-              <!-- <label class="form-label" for="form3Example4c">Password</label> -->
-            </div>
-          </div>
-          </div>
-          <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-            <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="login_btn" class="btn btn-primary btn-lg msx-2">Login</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
   <!-- slider section -->
   <div>
   <div id="carouselExampleCaptions"  class="carousel slide" data-bs-ride="carousel">
@@ -149,7 +59,7 @@
    <div class="banner-container">
    <div class="banner">
 
-    <div class="card mx-5 " style="width: 18rem;">
+      <div class="card mx-5 my-2" style="width: 18rem;">
         <img src="{% static 'img/4.jpg' %}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
@@ -157,7 +67,7 @@
         </div>
       </div>
 
-      <div class="card mx-5" style="width: 18rem;">
+      <div class="card mx-5 my-2" style="width: 18rem;">
         <img src="{% static 'img/5.jpg' %}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
@@ -166,7 +76,7 @@
         </div>
       </div>
 
-      <div class="card mx-5" style="width: 18rem;">
+      <div class="card mx-5 my-2" style="width: 18rem;">
         <img src="{% static 'img/6.jpg' %}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
@@ -188,7 +98,7 @@
         <h2 style="text-transform: capitalize; color: #fff; text-transform: capitalize;">Jewellery Shop.</h2>
     
         <p style="color: #fff">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam non debitis vitae, voluptates doloribus architecto accusamus commodi ipsum aut a reprehenderit dolorem suscipit minus quos explicabo expedita aliquid quas molestiae.
+            One of the best gold seller and best gold rates accross India. We sell best-desined Jewellery and reasonable making charges.    
         </p>
        </div>
    </div>
