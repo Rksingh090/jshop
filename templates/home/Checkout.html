@@ -78,7 +78,7 @@
         if(isNaN(zip_code)){
             $('#sError').html("Pin code must me a number");
         }
-        else if(zip_code.length > 6 || zip_code < 6){
+        else if(zip_code.length > 6 || zip_code.length < 6){
             $('#sError').html("Pin code is not correct. Must be of 6 Digit.");
         }
         else if(isNaN(phone)){
