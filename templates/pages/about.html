@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/page.css' %}">
+{% endblock %}
+{% block body %}
+<div class="abDiv">
+    <h2 class="abH2">About Us</h2>
+    <p class="abP1">We are the seller of gold and Jewellery online. Our main goal is to give you the best quality of gold with precious Items.</p>
+    <p class="abP2">We believ to deliver the best gold and Jewellery service to our custome. Every cutomer is our company member. Join with Yourself and Us feel proud.</p>
+</div>
+
+<div class="abLinks">
+    <ul>
+        <li><a href="/products">All Products</a></li>
+        <li><a href="/contact">Contact</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/contact">Cart</a></li>
+        {% else %}
+            <li><a href="/contact">Login</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

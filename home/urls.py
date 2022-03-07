@@ -16,6 +16,8 @@ urlpatterns = [
     path('checkout', views.CheckoutView, name='checkout'),
     path('search', views.SearchView, name='search'),
     path('handlerequest', views.handleRequest, name='handlerequest'),
+    path('about', views.aboutView, name='about'),
+    path('contact', views.contactView, name='contact'),
 ] 
 
 

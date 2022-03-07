@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/page.css' %}">
+<style>
+    body{
+        background: url("{% static 'img/contact.jpg' %}");
+        width: 100%;
+        background-size: cover;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="contactContainer">
+
+    <form class="cForm" action="/contact" method="post">
+        {% csrf_token %}
+        {% for inputs in contact_form %}
+            {{inputs}}
+        {% endfor %}
+        <input type="submit" value="Contact Us" >
+    </form>
+
+</div>
+{% endblock %}

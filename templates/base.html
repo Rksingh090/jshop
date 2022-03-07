@@ -34,6 +34,14 @@
         background-color: rgb(255, 237, 136);
         color: rgb(0, 0, 0);
       }
+      .messages > .success{
+        background-color: rgb(53, 177, 5);
+        color: rgb(255, 255, 255);
+      }
+      .messages > .info{
+        background-color: rgb(43, 129, 226);
+        color: rgb(0, 0, 0);
+      }
     </style>
 </head>
 <body>
@@ -43,61 +51,49 @@
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
-
-    {% if register_form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-                {{ error }}
-            {% endfor %}
-        {% endif %}
-
-        {% for hidden in register_form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
-
-    
 </ul>
 {% endif %}
 
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #000000f1; color: white;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #929fba" >
      
         <div class="container-fluid">
           <a class="navbar-brand text-white" href="#">Jewellery Shop</a>
 
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon" style=" color: white;"></span>
+            <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active text-white" aria-current="page" href="{% url 'home' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'products' %}">Products</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
               </li>
               
               <li class="nav-item">
-                <a class="nav-link text-white" href="#contact" >Contact us</a>
+                <a class="nav-link" href="{% url 'products' %}">Products</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/contact" >Contact us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item" style="cursor: pointer;">
-                <a class="nav-link text-white" href="{% url 'logout' %}">LogOut</a>
+                <a class="nav-link" href="{% url 'logout' %}">LogOut</a>
               </li>
               {% else %}
               <li class="nav-item" style="cursor: pointer;">
-                <a class="nav-link text-white" href="/login">Login</a>
+                <a class="nav-link" href="/login">Login</a>
               </li>
               {% endif %}
               {% if user.is_authenticated %}
                 <li class="nav-item" style="cursor: pointer; position: relative;">
-                  <a class="nav-link text-white" href="cart"><i class="fas fa-shopping-cart"></i></a>
-                  {% if cartlength > 0 %}
-                  <span style="text-align: center; line-height: 15px; position: absolute; background-color: red; height: 15px; width: 15px; border-radius: 50%; top: 0; right: 0; font-size: 12px;">
-                    {{cartlength}}
-                  </span>
+                  <a class="nav-link" href="cart"><i class="fas fa-shopping-cart"></i>
+                    {% if cartlength > 0 %}
+                    ({{cartlength}})
                   {% endif %}
+                  </a>
                 </li>
               {% endif %}
             </ul>

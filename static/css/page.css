@@ -1,0 +1,106 @@
+.contactContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cForm::before{
+    content: "";
+    position: absolute;
+    background: inherit;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+    filter: blur(10px);
+    margin: -20px;
+}
+.cForm{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 25px;
+    box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+    background: inherit;
+    overflow: hidden;
+}
+.cForm > input, textarea:focus{
+    outline: none;
+}
+.cForm > input, textarea{
+    width: 95%;
+    color: white;
+    resize: none;
+    background-color: transparent;
+    margin: 8px 0;
+    padding: 8px;
+    border: .3px solid rgba(255, 255, 255, 0.384);
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+}
+.cForm > input[type="submit"]{
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid white;
+    border-radius: 0;
+    color: rgb(255, 255, 255);
+    transition: all 1s ease;
+}
+.cForm > input[type="submit"]:hover{
+    background-color: white;
+    color: rgb(0, 0, 0);
+}
+input::placeholder, textarea::placeholder{
+    color: white !important;
+}
+
+/* about page styling */
+.abDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    margin: 50px 0;
+}
+.abH2{
+    margin: 20px 0;
+    padding-bottom: 5px;
+    border-bottom: 4px solid #333;
+}
+.abP1, .abP2{
+    max-width: 90%;
+    width: 70%;
+    margin: 20px 0;
+    font-size: 20px;
+}
+
+.abLinks{
+    width: 100%;
+}
+.abLinks > ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+.abLinks > ul > li{
+    margin: 0 10px;
+}
+.abLinks > ul > li > a{
+    padding: 8px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #7a63fd;
+    color: white;
+    text-decoration: none;
+}

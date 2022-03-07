@@ -1,5 +1,9 @@
 from distutils.command.upload import upload
+import email
+from pyexpat import model
+from statistics import mode
 from tkinter import CASCADE
+from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -42,3 +46,10 @@ class Orders(models.Model):
     phone = models.BigIntegerField(null=True)
     totalAmount = models.IntegerField(null=True)
     paymentStatus = models.CharField(max_length=255,default='PENDING',null=True)
+
+class ContactUs(models.Model):
+    cID = models.AutoField(primary_key=True, unique=True)
+    name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    message = models.TextField(max_length=5000)
+

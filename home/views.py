@@ -6,7 +6,7 @@ from django.shortcuts import  redirect, render
 from django.contrib.auth import get_user
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from home.forms import NewUserForm
+from home.forms import NewUserForm, ContactForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Orders, Product, Cart
 from django.core import serializers
@@ -14,22 +14,23 @@ from django.views.decorators.csrf import csrf_exempt
 from home import checksum
 import json
 
+# home page - index ('/')
 def index(request):
     cart = Cart.objects.filter(userId = request.user.id)
     cartlength = len(cart)
-
     return render(request=request, template_name="home/index.html", context={'cartlength': cartlength})
 
-
-# @login_required(login_url='/')
+# product page - '/product'
 def productView(request):
     cart = Cart.objects.filter(userId = request.user.id)
     cartlength = len(cart)
     products = Product.objects.all()
     return render(request, 'home/products.html', context={"products": products, "cartlength": cartlength})
 
-
+# login and register page handler view '/login'
 def loginView(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     if request.method == "POST":
         if 'login_btn' in request.POST:
             username = request.POST.get('email')
@@ -41,27 +42,36 @@ def loginView(request):
             else:
                 messages.warning(request, "Email or Password is not correct.")
         if 'register_btn' in request.POST:
-            print('Clicked Register')
             form = NewUserForm(request.POST)
             if form.is_valid():
                 user = form.save()
+                username = form.cleaned_data.get('username')
+                messages.success(request, f"New Account Created: {username}")
                 login(request, user)
+                messages.info(request, f"You are now logged in as {username}")
+                return redirect("/")
+            else:
+                for msg in form.error_messages:
+                    messages.error(request, f"{msg}: {form.error_messages[msg]}")
+                    messages.info(request, f"Choose a strong password with at least 1 Capital, 1 small, 1 Special character and at least 1 number. Minimum 8 character password.")
+                    print(msg)  
     form = NewUserForm()
     return render(request, "home/Login.html",context={"register_form": form,})
 
-
+# logout view 
 def logout_view(request):
     logout(request)
     return redirect('/')
 
+#delete items from cart
 def deleteCartItem(request, cid):
     if request.method == 'GET':
         Cart.objects.filter(id = int(cid)).delete()
         return redirect('/cart')
     return HttpResponse(f'{cid}')
 
-
-@login_required(login_url='/')
+# user cart page 
+@login_required(login_url='/login')
 def CartView(request):
     cart = Cart.objects.filter(userId = request.user.id)
     cartlength = len(cart)
@@ -71,8 +81,8 @@ def CartView(request):
         totalAmount+=singleItemPrize
     return render(request, 'home/cart.html', {'cart': cart, 'cartlength': cartlength, 'totalAmount': totalAmount})
     
-
-@login_required(login_url='/')
+# add items to cart 
+@login_required(login_url='/login')
 def addToCart(request, pid):
     if request.user.id:
         product = Product.objects.filter(id = pid)
@@ -90,13 +100,11 @@ def addToCart(request, pid):
         cart.userEmail = request.user.email
         cart.qty = 1
         cart.save()
-    else:
-        return redirect('/products')
-    return HttpResponseRedirect('/cart')
+    # else:
+    #     return redirect('/products')
+    return HttpResponseRedirect('/products')
 
-
-
-
+# update the quantity of cart 
 def updateQty(request):
     if request.method == 'POST':
         qty = request.POST.get('qty')
@@ -108,8 +116,10 @@ def updateQty(request):
             cartItem.save()
     return HttpResponse(f'{cartItem}')
 
-
+# handler checkout and redirect to payment method '/checkout'
 def CheckoutView(request):
+    cart = Cart.objects.filter(userId=request.user.id)
+    cartlength = len(cart)
     if request.method == 'POST':
         itemJson = request.POST.get('itemJson')
         totalAmount = request.POST.get('totalAmount')
@@ -120,21 +130,18 @@ def CheckoutView(request):
         state = request.POST.get('state')
         zip_code = request.POST.get('pinCode')
         phone = request.POST.get('phone')
-        
 
+        # save order into database 
         order = Orders(order_json=itemJson, userId=request.user.id, userName=name, userEmail=email, userAddress=address, city=city, state=state,zip_code=zip_code, phone=phone, totalAmount=int(totalAmount))
         order.save()
         toFixCart = Cart.objects.filter(userId=request.user.id)
-
-        if len(toFixCart) > 1:
-            for i in toFixCart:
-                i.orderId = int(order.orderId)
-                i.save()
-        else:
-            toFixCart.orderId = int(order.orderId)
-            toFixCart.save()
         oid = str('OIDNO'+str(order.orderId))
+        # if len(toFixCart) > 1:
+        for i in toFixCart:
+            i.orderId = int(order.orderId)
+            i.save()
 
+        # generating dictionary to generate hash and pass to paytm 
         param_dict = {
             'MID': 'AXngIz82728101827788',
             'ORDER_ID': oid,
@@ -155,11 +162,9 @@ def CheckoutView(request):
     jsonData = serializers.serialize('json', queryset=checkout)
     for items in checkout:
         totalAmount += int(items.productPrize)*int(items.qty)
-    return render(request, 'home/Checkout.html', {"checkout": checkout, "totalPrize": totalAmount, 'jsonData': jsonData})
+    return render(request, 'home/Checkout.html', {"checkout": checkout, "totalPrize": totalAmount, 'jsonData': jsonData, "cartlength": cartlength})
 
-
-
-
+# handle the response from the paytm after payment 'handlerequest'
 @csrf_exempt
 def handleRequest(request):
     
@@ -183,14 +188,33 @@ def handleRequest(request):
                 pOrder.save()
                 Cart.objects.filter(orderId=int(oid[5:])).delete()
             else:
-                Orders.objects.filter(orderId=int(response_dict['ORDERID'])).delete()
+                oid = response_dict['ORDERID']
+                Orders.objects.filter(orderId=int(oid[5:])).delete()
 
         return render(request, 'home/paymentstatus.html', {"response": response_dict})
 
-
+# searching product items 
 def SearchView(request):
     cart = Cart.objects.filter(userId=request.user.id)
     cartlength = len(cart)
     data = request.GET.get('q')
     products = Product.objects.filter(productName__contains=data)
     return render(request, 'home/products.html', context={"products": products, "cartlength": cartlength, "isSearchPage": True, "searchTerm": data})
+
+# about page '/about'
+def aboutView(request):
+    return render(request, "pages/about.html")
+
+# contact page '/contact'
+def contactView(request):
+    cForm = ContactForm()
+    if request.method == "POST":
+        contactF = ContactForm(request.POST)
+        if contactF.is_valid():
+            contactF.save()
+            messages.success(request,"You message reached to us. We will connect with you in a moment.")
+            return redirect('/')
+        else:
+            messages.info(request,"Please enter correct email !")
+
+    return render(request, "pages/contact.html", context={"contact_form": cForm})
