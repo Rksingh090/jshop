@@ -1,0 +1,4 @@
+django
+pycryptodome
+attr
+attrs
