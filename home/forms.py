@@ -1,7 +1,4 @@
 from pickle import TRUE
-from wsgiref.validate import validator
-from xml.dom import ValidationErr
-from attr import attr, attrs
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
